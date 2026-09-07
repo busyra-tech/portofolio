@@ -14,10 +14,13 @@ import {
   Smartphone, 
   Apple, 
   Globe,
-  ArrowRight
+  ArrowRight,
+  Package,
+  ExternalLink,
 } from "lucide-react";
-import { ALL_SERVICES } from "@/data/landingData";
+import { ALL_SERVICES, SAAS_PRODUCTS } from "@/data/landingData";
 import { ThemeToggle } from "./ThemeToggle";
+import { BrandLogo } from "./BrandLogo";
 
 interface NavbarProps {
   onOpenConsultation: () => void;
@@ -27,7 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const productsDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +47,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setServicesDropdownOpen(false);
+      }
+      if (productsDropdownRef.current && !productsDropdownRef.current.contains(event.target as Node)) {
+        setProductsDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -73,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/85 dark:bg-[#080b11]/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/8 py-3 shadow-xs dark:shadow-2xl"
+          ? "bg-white/85 dark:bg-obsidian/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/8 py-3 shadow-xs dark:shadow-2xl"
           : "bg-transparent py-4 sm:py-5"
       }`}
     >
@@ -81,11 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
         <div className="flex items-center justify-between">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-linear-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-[1.5px] shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/35 transition-all">
-              <div className="w-full h-full bg-white dark:bg-[#090d16] rounded-[10px] flex items-center justify-center transition-colors">
-                <Cpu className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-300" />
-              </div>
-            </div>
+            <BrandLogo size="md" />
             <div className="text-left">
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-[15px] sm:text-base tracking-tight text-slate-900 dark:text-white font-mono flex items-center">
@@ -173,6 +177,71 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               )}
             </div>
 
+            {/* Produk Dropdown */}
+            <div className="relative" ref={productsDropdownRef}>
+              <button
+                onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
+                onMouseEnter={() => setProductsDropdownOpen(true)}
+                className={`text-[13px] font-medium px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1 cursor-pointer ${
+                  productsDropdownOpen
+                    ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50/90 dark:bg-white/8"
+                    : "text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100/90 dark:hover:bg-white/8"
+                }`}
+              >
+                <span>Produk</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${productsDropdownOpen ? "rotate-180 text-indigo-500" : "text-slate-400"}`} />
+              </button>
+
+              {productsDropdownOpen && (
+                <div
+                  onMouseLeave={() => setProductsDropdownOpen(false)}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 rounded-2xl bg-white dark:bg-[#0c101c] border border-slate-200 dark:border-white/10 shadow-2xl p-2.5 z-50 text-left space-y-1 animate-in fade-in zoom-in-95 duration-150"
+                >
+                  <div className="px-3 py-1.5 text-[10px] font-mono uppercase text-slate-400 dark:text-slate-500 font-bold border-b border-slate-100 dark:border-white/5 flex items-center justify-between">
+                    <span>Produk SaaS</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Live</span>
+                  </div>
+
+                  <div className="space-y-0.5 pt-1">
+                    {SAAS_PRODUCTS.map((product) => (
+                      <a
+                        key={product.id}
+                        href={product.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => setProductsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300 dark:hover:text-white transition-colors group"
+                      >
+                        <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-600/20 group-hover:scale-105 transition-all shrink-0">
+                          <Package className={`w-4 h-4 ${product.accentColor === 'emerald' ? 'text-emerald-500 dark:text-emerald-400' : 'text-violet-500 dark:text-violet-400'}`} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-semibold truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                            {product.name}
+                            <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-500 shrink-0" />
+                          </div>
+                          <div className="text-[10px] text-slate-400 dark:text-slate-500 font-mono truncate">
+                            {product.tagline}
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 dark:border-white/5">
+                    <a
+                      href="/produk"
+                      onClick={() => setProductsDropdownOpen(false)}
+                      className="flex items-center justify-center gap-1.5 text-center text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 p-2 rounded-xl hover:bg-indigo-50/50 dark:hover:bg-white/5 transition-colors font-mono"
+                    >
+                      <span>Lihat Semua Produk</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Portofolio Link (NO ICON as requested) */}
             <Link
               href="/portofolio"
@@ -222,7 +291,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-3 p-4 rounded-2xl bg-white dark:bg-[#0e131f] border border-slate-200 dark:border-white/10 shadow-2xl space-y-3 text-left animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="md:hidden mt-3 p-4 rounded-2xl bg-white dark:bg-obsidian-surface border border-slate-200 dark:border-white/10 shadow-2xl space-y-3 text-left animate-in fade-in slide-in-from-top-2 duration-200">
             <div className="flex flex-col gap-1">
               <Link
                 href="/"
@@ -238,6 +307,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               >
                 <span>Layanan Kami (7 Pilar)</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">Semua</span>
+              </Link>
+              <Link
+                href="/produk"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm text-emerald-600 dark:text-emerald-400 font-semibold px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center justify-between"
+              >
+                <span>Produk SaaS</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Live</span>
               </Link>
               <Link
                 href="/portofolio"

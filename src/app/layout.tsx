@@ -28,7 +28,15 @@ export const metadata: Metadata = {
     "konsultan ai indonesia",
     "busyra tech",
   ],
-  authors: [{ name: "Busyra Tech" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "Busyra Tech — Enterprise Software Engineering & Production AI Integrator",
     description:

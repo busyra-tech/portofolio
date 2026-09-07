@@ -3,27 +3,24 @@
 import React from "react";
 import Link from "next/link";
 import { COMPANY_INFO, ALL_SERVICES } from "@/data/landingData";
+import { BrandLogo } from "./BrandLogo";
 import {
-  Cpu,
   Mail,
   Phone,
   MessageCircle,
   ArrowUp,
   ShieldCheck,
-  CheckCircle2,
-  Clock,
   ArrowRight,
-  Sparkles,
   Lock,
   Building2,
   FileCheck2,
 } from "lucide-react";
 
 interface FooterProps {
-  onOpenConsultation: () => void;
+  onOpenConsultation?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
+export const Footer: React.FC<FooterProps> = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -103,15 +100,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand & Direct Contact Column (Col 5) */}
-          <div className="lg:col-span-4 space-y-5 text-left">
+          <div className="lg:col-span-5 space-y-5 text-left">
             {/* Brand Logo & Live Status */}
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-indigo-600 via-blue-600 to-cyan-500 flex items-center justify-center p-0.5 shadow-md shadow-indigo-500/20">
-                  <div className="w-full h-full bg-white dark:bg-obsidian rounded-[10px] flex items-center justify-center">
-                    <Cpu className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                  </div>
-                </div>
+                <BrandLogo size="md" />
                 <div className="text-left">
                   <span className="font-extrabold text-xl text-slate-900 dark:text-white font-mono tracking-tight">
                     BUSYRA<span className="text-indigo-600 dark:text-cyan-400">.</span>TECH
@@ -152,8 +145,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
             </div>
           </div>
 
-          {/* Column 2: Layanan Rekayasa (Col 3) */}
-          <div className="lg:col-span-3 space-y-4 text-left">
+          {/* Column 2: Layanan Rekayasa (Col 4) */}
+          <div className="lg:col-span-4 space-y-4 text-left">
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-2">
               <span className="text-xs font-mono uppercase text-slate-900 dark:text-white font-bold tracking-wider">
                 Layanan Rekayasa
@@ -178,8 +171,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
             </ul>
           </div>
 
-          {/* Column 3: Navigasi & Eksplorasi (Col 2) */}
-          <div className="lg:col-span-2 space-y-4 text-left">
+          {/* Column 3: Navigasi & Eksplorasi (Col 3) */}
+          <div className="lg:col-span-3 space-y-4 text-left">
             <div className="border-b border-slate-200 dark:border-white/10 pb-2">
               <span className="text-xs font-mono uppercase text-slate-900 dark:text-white font-bold tracking-wider">
                 Eksplorasi
@@ -194,6 +187,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
                 >
                   <span>Portofolio</span>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">12+</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/produk"
+                  className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white transition-all group"
+                >
+                  <span>Produk SaaS</span>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">Live</span>
                 </Link>
               </li>
               <li>
@@ -233,52 +235,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
                 </Link>
               </li>
             </ul>
-          </div>
-
-          {/* Column 4: Operational Hours & Fast Consultation (Col 3) */}
-          <div className="lg:col-span-3 space-y-4 text-left">
-            <div className="border-b border-slate-200 dark:border-white/10 pb-2">
-              <span className="text-xs font-mono uppercase text-slate-900 dark:text-white font-bold tracking-wider">
-                Operasional &amp; Konsultasi
-              </span>
-            </div>
-
-            {/* Operational Card */}
-            <div className="p-4 rounded-2xl bg-white dark:bg-white/2 border border-slate-200/80 dark:border-white/5 space-y-3 text-left shadow-xs">
-              <div className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
-                <div className="text-xs space-y-1">
-                  <div className="font-bold text-slate-900 dark:text-white">
-                    Jam Kerja Resmi:
-                  </div>
-                  <div className="text-slate-600 dark:text-slate-400 font-mono text-[11px]">
-                    Senin - Jumat: 09.00 - 18.00 WIB
-                  </div>
-                  <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-mono font-medium">
-                    Emergency SLA 24/7 SIAGA
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-2 border-t border-slate-100 dark:border-white/5">
-                <button
-                  onClick={onOpenConsultation}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white font-bold text-xs shadow-md shadow-indigo-600/25 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Jadwalkan Konsultasi Teknis</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Strict NDA Assurance badge */}
-            <div className="p-3 rounded-xl bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/15 flex items-center gap-2.5 text-xs text-indigo-700 dark:text-indigo-300">
-              <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
-              <span className="text-[11px] leading-tight font-medium">
-                Kerahasiaan data terjamin dengan Perjanjian Kerahasiaan (NDA) resmi sebelum kick-off.
-              </span>
-            </div>
           </div>
         </div>
 

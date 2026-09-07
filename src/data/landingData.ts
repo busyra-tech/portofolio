@@ -1,3 +1,49 @@
+export interface SaasProduct {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  url: string;
+  features: string[];
+  badge: string;
+  accentColor: 'indigo' | 'emerald' | 'cyan' | 'violet' | 'amber' | 'rose';
+}
+
+export const SAAS_PRODUCTS: SaasProduct[] = [
+  {
+    id: "uangku",
+    name: "UangKu",
+    tagline: "Sistem Operasi Finansial Pribadi & Keluarga",
+    description:
+      "Platform pencatatan keuangan cerdas dengan Smart Bank Paste, AI Receipt Scanner, Kalkulator Zakat & PPh 21, serta budgeting 50/30/20 otomatis.",
+    url: "https://uangku.ajidwisaputra.com",
+    features: [
+      "Smart Bank Paste (BCA, Mandiri, BRI, GoPay)",
+      "AI Vision OCR Scan Struk",
+      "Kalkulator Zakat Maal & PPh 21",
+      "Budgeting 50/30/20 & Emergency Runway",
+    ],
+    badge: "Personal Finance",
+    accentColor: "emerald",
+  },
+  {
+    id: "aurakomik",
+    name: "AuraKomik",
+    tagline: "Platform Baca Komik Online Modern",
+    description:
+      "Template platform baca komik dengan katalog Manhwa, Manga & Manhua lengkap, rating sistem, dan update chapter real-time.",
+    url: "https://komik.ajidwisaputra.com",
+    features: [
+      "Katalog Manhwa, Manga & Manhua",
+      "Sistem Rating & Popularitas",
+      "Update Chapter Real-time",
+      "Responsive Reader PWA",
+    ],
+    badge: "Content Platform",
+    accentColor: "violet",
+  },
+];
+
 export interface ClientLogo {
   name: string;
   category: 'Pemerintahan & BUMN' | 'Korporasi & Manufaktur' | 'Teknologi & Finansial';
