@@ -96,7 +96,7 @@ export interface PortfolioItem {
   slug: string;
   title: string;
   client: string;
-  category: 'Pemerintahan & BUMN' | 'Corporate' | 'Lainnya';
+  category: 'Pemerintahan & BUMN' | 'Corporate' | 'AI & Otomasi' | 'Lainnya';
   shortDesc: string;
   fullOverview: string;
   challenge: string;
@@ -667,6 +667,81 @@ export const ALL_PORTFOLIO: PortfolioItem[] = [
       "Pipeline Manajemen Penjualan Kanban Visual",
     ],
     techStack: ["React", "Node.js", "MongoDB", "WhatsApp Business API", "WebSockets"],
+  },
+  {
+    id: "busyra-commerce",
+    slug: "busyra-commerce",
+    title: "Autonomous Multi-Platform Commerce Engine",
+    client: "BusyraTech Store Ecosystem",
+    category: "AI & Otomasi",
+    shortDesc: "Sistem Otomasi Toko Multi-Platform Terintegrasi Telegram, WhatsApp Baileys & SQLite",
+    fullOverview:
+      "Mesin transaksi dan fulfillment digital mandiri dengan orkestrasi multi-channel pesan instan, auto-delivery lisensi akun instan, dynamic inventory locking, dan integrasi pembayaran QRIS/ShopeePay.",
+    challenge:
+      "Pengelolaan pesanan multi-kanal secara manual sering menimbulkan jeda konfirmasi, stock overselling saat flash sale, dan risiko human error saat pengiriman kredensial akun.",
+    solution:
+      "Pembangunan bot daemon asynchronous dengan queue processing aman, pencegahan race condition berbasis transaksi atomik SQLite, dan pengiriman otomatis struk digital 1-tap copy.",
+    impactMetrics: [
+      { label: "Kecepatan Fulfillment Akun", value: "<1 Detik" },
+      { label: "Uptime Multi-Platform", value: "99.9%" },
+      { label: "Otomasi Transaksi", value: "100% Otomatis" },
+    ],
+    deliverables: [
+      "Bot Telegram GrammY & Engine WhatsApp Baileys Terpadu",
+      "Atomic Inventory Manager & Anti Race-Condition Engine",
+      "Dasbor Eksekutif & Generator Laporan Finansial Multi-Sheet",
+    ],
+    techStack: ["Node.js", "GrammY", "Baileys", "SQLite (better-sqlite3)", "Python OpenPyXL"],
+  },
+  {
+    id: "privasimu",
+    slug: "privasimu",
+    title: "Privasimu — Personal Data Protection & Consent Engine",
+    client: "Privasimu Compliance Suite",
+    category: "Corporate",
+    shortDesc: "Platform Kepatuhan Perlindungan Data Pribadi & Manajemen Persetujuan Digital",
+    fullOverview:
+      "Sistem kepatuhan privasi data digital berstandar UU PDP Indonesia dan GDPR untuk mengelola persetujuan pengguna (consent management), enkripsi metadata PII, dan audit trail akses data sensitif.",
+    challenge:
+      "Banyak korporasi belum memiliki infrastruktur yang patuh terhadap regulasi UU PDP baru, rentan sanksi denda kebocoran data konsumen.",
+    solution:
+      "Platform middleware keamanan data dengan enkripsi AES-256 tingkat kolom, portal manajemen hak subjek data (DSR), dan dashboard kepatuhan compliance perwira data (DPO).",
+    impactMetrics: [
+      { label: "Kepatuhan Regulasi UU PDP", value: "100%" },
+      { label: "Enkripsi Kolom PII", value: "AES-256" },
+      { label: "Waktu Pemenuhan Hak Data (DSR)", value: "<24 Jam" },
+    ],
+    deliverables: [
+      "Portal Manajemen Persetujuan Privasi (Consent Platform)",
+      "Middleware Enkripsi & Tokenisasi Data PII",
+      "Dashboard Audit Kepatuhan Data Protection Officer",
+    ],
+    techStack: ["Next.js", "TypeScript", "PostgreSQL", "AES-256", "Docker"],
+  },
+  {
+    id: "wargaconnect",
+    slug: "wargaconnect",
+    title: "WargaConnect — Smart Community & Citizen Governance",
+    client: "Komunitas & Pengelola Lingkungan Terpadu",
+    category: "Lainnya",
+    shortDesc: "Platform Digital Pengelolaan Warga, Iuran Keuangan & Pelaporan Aspirasi Lingkungan",
+    fullOverview:
+      "Aplikasi tata kelola warga terintegrasi untuk mendigitalkan pembayaran iuran RT/RW, pencatatan kas transparan, sistem panic button darurat warga, dan penyampaian aspirasi lingkungan secara real-time.",
+    challenge:
+      "Penagihan iuran warga konvensional pintu-ke-pintu sering mengalami tunggakan, minim transparansi pembukuan kas lingkungan, dan lambatnya respon saat keadaan darurat.",
+    solution:
+      "Portal mobile dan web dengan gateway pembayaran digital, pencatatan kas otomatis, dan sistem broadcast darurat berbasis geolokasi.",
+    impactMetrics: [
+      { label: "Efisiensi Penagihan Iuran", value: "+80%" },
+      { label: "Transparansi Kas Lingkungan", value: "100%" },
+      { label: "Waktu Respon Darurat Warga", value: "<2 Menit" },
+    ],
+    deliverables: [
+      "Aplikasi Mobile Warga Mandiri",
+      "Dashboard Manajemen Kas & Pembukuan Pengurus",
+      "Modul Panic Button & Broadcast Darurat Geolokasi",
+    ],
+    techStack: ["React Native", "Laravel", "MySQL", "Pusher WebSockets", "Midtrans"],
   },
 ];
 

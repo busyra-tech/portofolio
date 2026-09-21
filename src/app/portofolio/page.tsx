@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ConsultationModal } from "@/components/ConsultationModal";
@@ -13,6 +13,7 @@ import {
   Building2, 
   Landmark, 
   Layers, 
+  Sparkles,
   X, 
   MessageCircle
 } from "lucide-react";
@@ -24,8 +25,26 @@ export default function PortofolioPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeItem, setActiveItem] = useState<PortfolioItem | null>(null);
 
-  const categories = ["Semua", "Pemerintahan & BUMN", "Corporate", "Lainnya"];
+  const categories = [
+    "Semua",
+    "Pemerintahan & BUMN",
+    "Corporate",
+    "AI & Otomasi",
+    "Lainnya"
+  ];
 
+  // Dynamic project counts per category
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      Semua: ALL_PORTFOLIO.length,
+    };
+    ALL_PORTFOLIO.forEach((item) => {
+      counts[item.category] = (counts[item.category] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
+  // Filtered projects by category and search query
   const filteredProjects = useMemo(() => {
     return ALL_PORTFOLIO.filter((item) => {
       const matchCat = selectedCategory === "Semua" || item.category === selectedCategory;
@@ -37,6 +56,28 @@ export default function PortofolioPage() {
       return matchCat && matchQuery;
     });
   }, [selectedCategory, searchQuery]);
+
+  // Handle Escape key & body scroll lock
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (activeItem) setActiveItem(null);
+        if (modalOpen) setModalOpen(false);
+      }
+    };
+
+    if (activeItem || modalOpen) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeItem, modalOpen]);
 
   const handleOpenConsultation = (context: string) => {
     setProjectContext(context);
@@ -68,21 +109,34 @@ export default function PortofolioPage() {
 
           {/* Search & Category Filter Bar */}
           <div className="mt-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-2 rounded-2xl bg-white dark:bg-obsidian-surface border border-slate-200 dark:border-white/10 shadow-sm">
-            {/* Category Pills */}
-            <div className="flex flex-wrap gap-1">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`text-xs px-4 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${
-                    selectedCategory === cat
-                      ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+            {/* Category Pills with Live Dynamic Counts */}
+            <div className="flex flex-wrap gap-1.5">
+              {categories.map((cat) => {
+                const count = categoryCounts[cat] || 0;
+                const isSelected = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`text-xs px-3.5 py-2 rounded-xl font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
+                      isSelected
+                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-semibold"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{cat}</span>
+                    <span
+                      className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
+                        isSelected
+                          ? "bg-white/20 text-white"
+                          : "bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Search Input */}
@@ -128,6 +182,7 @@ export default function PortofolioPage() {
                       <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                         {item.category === "Pemerintahan & BUMN" && <Landmark className="w-3 h-3 text-indigo-500 dark:text-indigo-400" />}
                         {item.category === "Corporate" && <Building2 className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />}
+                        {item.category === "AI & Otomasi" && <Sparkles className="w-3 h-3 text-amber-500 dark:text-amber-400" />}
                         {item.category === "Lainnya" && <Layers className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />}
                         <span>{item.category}</span>
                       </span>
@@ -179,13 +234,20 @@ export default function PortofolioPage() {
           )}
         </section>
 
-        {/* Project Detail Modal */}
+        {/* Project Detail Modal with Escape & Backdrop Click */}
         {activeItem && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-3xl bg-white dark:bg-obsidian-surface border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 text-left max-h-[90vh] overflow-y-auto space-y-6 transition-colors">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+            onClick={() => setActiveItem(null)}
+          >
+            <div 
+              className="relative w-full max-w-3xl bg-white dark:bg-obsidian-surface border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 text-left max-h-[90vh] overflow-y-auto space-y-6 transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => setActiveItem(null)}
                 className="absolute top-5 right-5 p-2 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                title="Tutup (Esc)"
               >
                 <X className="w-5 h-5" />
               </button>
