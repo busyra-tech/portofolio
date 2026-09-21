@@ -42,6 +42,38 @@ export const SAAS_PRODUCTS: SaasProduct[] = [
     badge: "Content Platform",
     accentColor: "violet",
   },
+  {
+    id: "busyra-commerce",
+    name: "Busyra Commerce Bot",
+    tagline: "Autonomous Multi-Platform Commerce Engine",
+    description:
+      "Bot toko otonom multi-kanal terhubung Telegram & WhatsApp Baileys dengan integrasi QRIS, ShopeePay, manajemen stok atomik, dan auto-delivery kredensial instan.",
+    url: "https://t.me/storebusyratech_bot",
+    features: [
+      "Multi-Channel Bot (Telegram & WhatsApp)",
+      "Auto-Delivery Lisensi Digital Sub-Detik",
+      "Dynamic Atomic Inventory & Anti-Overselling",
+      "Ekspor Laporan Keuangan Multi-Sheet Excel",
+    ],
+    badge: "Commerce Engine",
+    accentColor: "indigo",
+  },
+  {
+    id: "usahaku",
+    name: "UsahaKu POS",
+    tagline: "Smart POS & SME Operational Management",
+    description:
+      "Platform kasir dan pembukuan digital modern untuk UMKM dengan manajemen inventaris multi-cabang, kalkulasi margin otomatis, dan rekapitulasi penjualan real-time.",
+    url: "https://usahaku.ajidwisaputra.com",
+    features: [
+      "Kasir Digital Cepat & Cetak Struk Bluetooth",
+      "Manajemen Stok & Peringatan Stok Kritis",
+      "Kalkulasi Margin & Laba-Rugi Otomatis",
+      "Laporan Harian & Integrasi Pembayaran QRIS",
+    ],
+    badge: "SME Management",
+    accentColor: "emerald",
+  },
 ];
 
 export interface ClientLogo {
